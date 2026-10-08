@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Slots - Smart Parking System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-area">
+                <h1>🚗 Smart Parking Management System</h1>
+                <p>Mini Project by Hariharan R | Arvind B | Kirubakaran S</p>
+            </div>
+            <div class="pattern-badges">
+                <span class="badge-pattern">Singleton (ParkingLotManager)</span>
+                <span class="badge-pattern">Observer (Slot Alerts)</span>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a th:href="@{/dashboard}" class="nav-link" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">📊 Dashboard</a>
+            <a th:href="@{/slots}" class="nav-link" th:classappend="${activePage == 'slots'} ? 'active' : ''">🅿️ Parking Slots</a>
+            <a th:href="@{/park}" class="nav-link" th:classappend="${activePage == 'park'} ? 'active' : ''">➕ Park Vehicle</a>
+            <a th:href="@{/current-vehicles}" class="nav-link" th:classappend="${activePage == 'current'} ? 'active' : ''">🚘 Current Vehicles</a>
+            <a th:href="@{/history}" class="nav-link" th:classappend="${activePage == 'history'} ? 'active' : ''">📜 Parking History</a>
+            <a th:href="@{/notifications}" class="nav-link" th:classappend="${activePage == 'notifications'} ? 'active' : ''">🔔 Notifications</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="pattern-note">
+            <strong>Singleton Pattern in Action:</strong> All slots displayed below are retrieved and synchronized directly through the central <code>ParkingLotManager.getInstance()</code> instance.
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <h2>🅿️ Parking Slots Grid Layout</h2>
+                <span style="font-size: 0.9rem; color: var(--text-muted);">🟢 Green = AVAILABLE | 🔴 Red = OCCUPIED</span>
+            </div>
+
+            <div class="slots-grid">
+                <div th:each="slot : ${slots}" class="slot-card" th:classappend="${slot.status.name() == 'AVAILABLE'} ? 'available' : 'occupied'">
+                    <div class="slot-id" th:text="${slot.slotId}">C01</div>
+                    <div class="slot-type" th:text="${slot.vehicleTypeAllowed}">CAR</div>
+                    <div>
+                        <span class="slot-status-pill" th:text="${slot.status}">AVAILABLE</span>
+                    </div>
+                    <div class="slot-vehicle-info" th:if="${slot.status.name() == 'OCCUPIED'}">
+                        <span>🚘 <strong th:text="${slot.currentVehicleNumber}">TN58AB1234</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Smart Parking Management System &copy; 2026 | CSE Design Patterns Mini Project</p>
+    </footer>
+
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>

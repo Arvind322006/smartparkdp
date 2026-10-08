@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications Log - Smart Parking System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-area">
+                <h1>🚗 Smart Parking Management System</h1>
+                <p>Mini Project by Hariharan R | Arvind B | Kirubakaran S</p>
+            </div>
+            <div class="pattern-badges">
+                <span class="badge-pattern">Observer Pattern Log</span>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a th:href="@{/dashboard}" class="nav-link" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">📊 Dashboard</a>
+            <a th:href="@{/slots}" class="nav-link" th:classappend="${activePage == 'slots'} ? 'active' : ''">🅿️ Parking Slots</a>
+            <a th:href="@{/park}" class="nav-link" th:classappend="${activePage == 'park'} ? 'active' : ''">➕ Park Vehicle</a>
+            <a th:href="@{/current-vehicles}" class="nav-link" th:classappend="${activePage == 'current'} ? 'active' : ''">🚘 Current Vehicles</a>
+            <a th:href="@{/history}" class="nav-link" th:classappend="${activePage == 'history'} ? 'active' : ''">📜 Parking History</a>
+            <a th:href="@{/notifications}" class="nav-link" th:classappend="${activePage == 'notifications'} ? 'active' : ''">🔔 Notifications</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="pattern-note">
+            <strong>Observer Pattern Execution Log:</strong> Every notification entry below represents an update call dispatched from Subject (<code>ParkingLotManager</code>) to Observers (<code>ParkingUser</code> & <code>ParkingAdmin</code>).
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <h2>🔔 Real-time Observer Notifications Stream</h2>
+            </div>
+
+            <div th:if="${#lists.isEmpty(notifications)}">
+                <p style="color: var(--text-muted); text-align: center; padding: 2rem;">No observer notifications recorded yet.</p>
+            </div>
+
+            <div class="table-responsive" th:if="${!#lists.isEmpty(notifications)}">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;"># ID</th>
+                            <th>Notification Message</th>
+                            <th style="width: 200px;">Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="notif : ${notifications}">
+                            <td th:text="${notif.id}">1</td>
+                            <td><strong style="color: #1e293b;" th:text="${notif.message}">Vehicle TN58AB1234 entered slot C01</strong></td>
+                            <td th:text="${#temporals.format(notif.timestamp, 'dd-MMM-yyyy HH:mm:ss')}">23-Sep-2026 10:30:15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Smart Parking Management System &copy; 2026 | CSE Design Patterns Mini Project</p>
+    </footer>
+
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>

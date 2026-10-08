@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Vehicles - Smart Parking System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-area">
+                <h1>🚗 Smart Parking Management System</h1>
+                <p>Mini Project by Hariharan R | Arvind B | Kirubakaran S</p>
+            </div>
+            <div class="pattern-badges">
+                <span class="badge-pattern">Strategy Pattern (Fee Calculation)</span>
+                <span class="badge-pattern">Observer Pattern (Release Alert)</span>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a th:href="@{/dashboard}" class="nav-link" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">📊 Dashboard</a>
+            <a th:href="@{/slots}" class="nav-link" th:classappend="${activePage == 'slots'} ? 'active' : ''">🅿️ Parking Slots</a>
+            <a th:href="@{/park}" class="nav-link" th:classappend="${activePage == 'park'} ? 'active' : ''">➕ Park Vehicle</a>
+            <a th:href="@{/current-vehicles}" class="nav-link" th:classappend="${activePage == 'current'} ? 'active' : ''">🚘 Current Vehicles</a>
+            <a th:href="@{/history}" class="nav-link" th:classappend="${activePage == 'history'} ? 'active' : ''">📜 Parking History</a>
+            <a th:href="@{/notifications}" class="nav-link" th:classappend="${activePage == 'notifications'} ? 'active' : ''">🔔 Notifications</a>
+        </div>
+    </nav>
+
+    <main>
+        <div th:if="${exitSuccessMessage}" class="alert alert-success">
+            <div>
+                <strong>✅ Exit Complete!</strong> <span th:text="${exitSuccessMessage}">Vehicle exited successfully.</span>
+            </div>
+        </div>
+
+        <div th:if="${errorMessage}" class="alert alert-error">
+            <div>
+                <strong>❌ Error:</strong> <span th:text="${errorMessage}">Process failed.</span>
+            </div>
+        </div>
+
+        <div class="pattern-note">
+            <strong>Strategy & Observer Pattern Demonstration:</strong> Clicking "Exit & Process Payment" executes <code>ParkingFeeStrategy</code> (calculating fee per vehicle strategy) and triggers <code>ParkingObserver</code> notifications to release the slot.
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <h2>🚘 Currently Parked Vehicles</h2>
+                <a th:href="@{/park}" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">➕ Park Another Vehicle</a>
+            </div>
+
+            <div th:if="${#lists.isEmpty(currentVehicles)}">
+                <p style="color: var(--text-muted); text-align: center; padding: 2rem;">No vehicles currently parked in the facility.</p>
+            </div>
+
+            <div class="table-responsive" th:if="${!#lists.isEmpty(currentVehicles)}">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Number</th>
+                            <th>Owner Name</th>
+                            <th>Vehicle Type</th>
+                            <th>Assigned Slot</th>
+                            <th>Entry Time</th>
+                            <th>Simulated Hours</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="vehicle : ${currentVehicles}">
+                            <td><strong th:text="${vehicle.vehicleNumber}">TN58AB1234</strong></td>
+                            <td th:text="${vehicle.ownerName}">Arvind</td>
+                            <td>
+                                <span th:text="${vehicle.vehicleType}" style="font-weight: 700; font-size: 0.85rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: #e2e8f0;">CAR</span>
+                            </td>
+                            <td><strong style="color: var(--primary-color);" th:text="${vehicle.assignedSlot}">C01</strong></td>
+                            <td th:text="${#temporals.format(vehicle.entryTime, 'dd-MMM-yyyy HH:mm:ss')}">23-Sep-2026 10:30:00</td>
+                            <td>
+                                <form th:action="@{/exit}" method="post" th:id="${'exitForm-' + vehicle.id}" style="display: flex; gap: 0.5rem; align-items: center;">
+                                    <input type="hidden" name="vehicleNumber" th:value="${vehicle.vehicleNumber}">
+                                    <input type="number" name="simulatedHours" value="2" min="1" max="24" style="width: 60px; padding: 0.3rem;" title="Simulated parking duration in hours for demo"> hr(s)
+                                </form>
+                            </td>
+                            <td>
+                                <button type="submit" th:form="${'exitForm-' + vehicle.id}" class="btn btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+                                    🚪 Exit & Pay
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Smart Parking Management System &copy; 2026 | CSE Design Patterns Mini Project</p>
+    </footer>
+
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>

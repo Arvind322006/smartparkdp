@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Park Vehicle - Smart Parking System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-area">
+                <h1>🚗 Smart Parking Management System</h1>
+                <p>Mini Project by Hariharan R | Arvind B | Kirubakaran S</p>
+            </div>
+            <div class="pattern-badges">
+                <span class="badge-pattern">Factory Pattern (Vehicle Creation)</span>
+                <span class="badge-pattern">Singleton Pattern (Slot Allocation)</span>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a th:href="@{/dashboard}" class="nav-link" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">📊 Dashboard</a>
+            <a th:href="@{/slots}" class="nav-link" th:classappend="${activePage == 'slots'} ? 'active' : ''">🅿️ Parking Slots</a>
+            <a th:href="@{/park}" class="nav-link" th:classappend="${activePage == 'park'} ? 'active' : ''">➕ Park Vehicle</a>
+            <a th:href="@{/current-vehicles}" class="nav-link" th:classappend="${activePage == 'current'} ? 'active' : ''">🚘 Current Vehicles</a>
+            <a th:href="@{/history}" class="nav-link" th:classappend="${activePage == 'history'} ? 'active' : ''">📜 Parking History</a>
+            <a th:href="@{/notifications}" class="nav-link" th:classappend="${activePage == 'notifications'} ? 'active' : ''">🔔 Notifications</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Success Alert -->
+        <div th:if="${successMessage}" class="alert alert-success">
+            <div>
+                <strong>✅ Success!</strong> <span th:text="${successMessage}">Vehicle parked successfully.</span>
+            </div>
+            <a th:href="@{/current-vehicles}" class="btn btn-secondary" style="padding:0.3rem 0.6rem; font-size:0.8rem;">View Current Vehicles</a>
+        </div>
+
+        <!-- Error Alert -->
+        <div th:if="${errorMessage}" class="alert alert-error">
+            <div>
+                <strong>❌ Error:</strong> <span th:text="${errorMessage}">Validation failed.</span>
+            </div>
+        </div>
+
+        <div class="pattern-note">
+            <strong>Factory Pattern Demonstration:</strong> Submitting this form calls <code>VehicleFactory.createVehicle(type, number, owner)</code>. The factory encapsulates creation of concrete <code>Car</code>, <code>Bike</code>, or <code>Truck</code> objects without hardcoding <code>new Car()</code>.
+        </div>
+
+        <div class="panel" style="max-width: 650px; margin: 0 auto;">
+            <div class="panel-header">
+                <h2>➕ Register & Park Vehicle</h2>
+            </div>
+
+            <form th:action="@{/park}" method="post">
+                <div class="form-group">
+                    <label for="ownerName">Owner Name *</label>
+                    <input type="text" id="ownerName" name="ownerName" class="form-control" placeholder="e.g. Arvind" th:value="${ownerName}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="vehicleNumber">Vehicle Registration Number *</label>
+                    <input type="text" id="vehicleNumber" name="vehicleNumber" class="form-control" placeholder="e.g. TN58AB1234" th:value="${vehicleNumber}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="vehicleType">Select Vehicle Type *</label>
+                    <select id="vehicleType" name="vehicleType" class="form-control" required>
+                        <option value="">-- Choose Vehicle Category --</option>
+                        <option value="CAR" th:selected="${selectedType == 'CAR'}">🚘 CAR (Four Wheeler)</option>
+                        <option value="BIKE" th:selected="${selectedType == 'BIKE'}">🏍️ BIKE (Two Wheeler)</option>
+                        <option value="TRUCK" th:selected="${selectedType == 'TRUCK'}">🚚 TRUCK (Heavy Vehicle)</option>
+                    </select>
+                </div>
+
+                <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                    <button type="submit" class="btn btn-primary" style="flex:1;">🚗 Park Vehicle & Assign Slot</button>
+                    <a th:href="@{/dashboard}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>Smart Parking Management System &copy; 2026 | CSE Design Patterns Mini Project</p>
+    </footer>
+
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>
