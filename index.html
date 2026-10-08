@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Smart Parking Management System</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -13,7 +13,7 @@
         <div class="header-container">
             <div class="logo-area">
                 <h1>🚗 Smart Parking Management System</h1>
-                <p>Mini Project by Karthika Velan S | Rajesh Kumar A | Ricky Sharon B | Sriram P</p>
+          
             </div>
             <div class="pattern-badges">
                 <span class="badge-pattern">Singleton</span>
@@ -26,18 +26,18 @@
 
     <nav>
         <div class="nav-container">
-            <a th:href="@{/dashboard}" class="nav-link" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">📊
+            <a href="index.html" class="nav-link">📊
                 Dashboard</a>
-            <a th:href="@{/slots}" class="nav-link" th:classappend="${activePage == 'slots'} ? 'active' : ''">🅿️
+            <a href="slots.html" class="nav-link">🅿️
                 Parking Slots</a>
-            <a th:href="@{/park}" class="nav-link" th:classappend="${activePage == 'park'} ? 'active' : ''">➕ Park
+            <a href="park.html" class="nav-link">➕ Park
                 Vehicle</a>
-            <a th:href="@{/current-vehicles}" class="nav-link"
-                th:classappend="${activePage == 'current'} ? 'active' : ''">🚘 Current Vehicles</a>
-            <a th:href="@{/history}" class="nav-link" th:classappend="${activePage == 'history'} ? 'active' : ''">📜
+            <a href="current-vehicles.html" class="nav-link"
+>🚘 Current Vehicles</a>
+            <a href="history.html" class="nav-link">📜
                 Parking History</a>
-            <a th:href="@{/notifications}" class="nav-link"
-                th:classappend="${activePage == 'notifications'} ? 'active' : ''">🔔 Notifications</a>
+            <a href="notifications.html" class="nav-link"
+>🔔 Notifications</a>
         </div>
     </nav>
 
@@ -53,60 +53,60 @@
         <div class="stats-grid">
             <div class="stat-card primary">
                 <h3>Total Slots</h3>
-                <div class="value" th:text="${totalSlots}">18</div>
+                <div class="value">18</div>
             </div>
             <div class="stat-card success">
                 <h3>Available Slots</h3>
-                <div class="value" th:text="${availableSlots}">18</div>
+                <div class="value">18</div>
             </div>
             <div class="stat-card danger">
                 <h3>Occupied Slots</h3>
-                <div class="value" th:text="${occupiedSlots}">0</div>
+                <div class="value">0</div>
             </div>
             <div class="stat-card warning">
                 <h3>Cars Parked</h3>
-                <div class="value" th:text="${carsParked}">0</div>
+                <div class="value">0</div>
             </div>
             <div class="stat-card warning">
                 <h3>Bikes Parked</h3>
-                <div class="value" th:text="${bikesParked}">0</div>
+                <div class="value">0</div>
             </div>
             <div class="stat-card warning">
                 <h3>Trucks Parked</h3>
-                <div class="value" th:text="${trucksParked}">0</div>
+                <div class="value">0</div>
             </div>
             <div class="stat-card primary">
                 <h3>Total Revenue</h3>
-                <div class="value">₹<span th:text="${totalRevenue}">0.00</span></div>
+                <div class="value">₹<span>0.00</span></div>
             </div>
         </div>
 
         <div class="action-bar">
-            <a th:href="@{/park}" class="btn btn-primary">➕ Park New Vehicle</a>
-            <a th:href="@{/slots}" class="btn btn-secondary">🅿️ View Parking Slots Grid</a>
-            <a th:href="@{/current-vehicles}" class="btn btn-secondary">🚘 View Current Parked Vehicles</a>
-            <a th:href="@{/history}" class="btn btn-secondary">📜 View Complete History</a>
+            <a href="park.html" class="btn btn-primary">➕ Park New Vehicle</a>
+            <a href="slots.html" class="btn btn-secondary">🅿️ View Parking Slots Grid</a>
+            <a href="current-vehicles.html" class="btn btn-secondary">🚘 View Current Parked Vehicles</a>
+            <a href="history.html" class="btn btn-secondary">📜 View Complete History</a>
         </div>
 
         <div class="panel">
             <div class="panel-header">
                 <h2>🔔 Live Observer Notifications</h2>
-                <a th:href="@{/notifications}" class="btn btn-secondary"
+                <a href="notifications.html" class="btn btn-secondary"
                     style="font-size:0.8rem; padding: 0.4rem 0.8rem;">View All</a>
             </div>
 
-            <div th:if="${#lists.isEmpty(recentNotifications)}">
+            <div>
                 <p style="color: var(--text-muted);">No recent notifications yet. Park or release a vehicle to trigger
                     Observer notifications.</p>
             </div>
 
-            <ul style="list-style: none; padding: 0;" th:if="${!#lists.isEmpty(recentNotifications)}">
-                <li th:each="notif : ${recentNotifications}"
+            <ul style="list-style: none; padding: 0;">
+                <li
                     style="padding: 0.75rem 0; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
-                    <span style="font-weight: 500; font-size: 0.95rem;">• <span th:text="${notif.message}">Vehicle
+                    <span style="font-weight: 500; font-size: 0.95rem;">• <span>Vehicle
                             TN58AB1234 entered</span></span>
                     <span style="font-size: 0.8rem; color: var(--text-muted);"
-                        th:text="${#temporals.format(notif.timestamp, 'HH:mm:ss')}">10:30:15</span>
+>10:30:15</span>
                 </li>
             </ul>
         </div>
@@ -116,7 +116,7 @@
         <p>Smart Parking Management System &copy; 2026 | CSE Design Patterns Mini Project</p>
     </footer>
 
-    <script th:src="@{/js/script.js}"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
